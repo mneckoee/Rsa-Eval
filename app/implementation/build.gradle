@@ -1,0 +1,11 @@
+android {
+    namespace 'ir.mneckoee.rsa.eval.app.implementation'
+}
+
+dependencies {
+    for (p in rootProject.subprojects) {
+        if (p.path.contains(":implementation") && p != project) {
+            implementation p
+        }
+    }
+}
