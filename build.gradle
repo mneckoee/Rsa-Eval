@@ -1,0 +1,54 @@
+//buildscript {
+//    repositories {
+//        mavenLocal()
+//        mavenCentral()
+//        maven { url "https://plugins.gradle.org/m2/" }
+//        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+//        google()
+//    }
+//    dependencies {
+//        classpath libs.android.gradle
+//        classpath libs.kotlin.gradle.plugin
+//        classpath libs.hilt.android.gradle.plugin
+//    }
+//}
+plugins{
+    alias(libs.plugins.android.application) apply false
+    alias(libs.plugins.android.library) apply false
+    alias(libs.plugins.kotlin.android) apply false
+    alias(libs.plugins.ksp) apply false
+}
+
+tasks.register('clean', Delete) {
+    delete rootProject.layout.buildDirectory
+}
+
+subprojects {
+    if (name == "app") {
+        apply plugin: libs.plugins.android.application.get().pluginId
+    } else {
+        apply plugin: libs.plugins.android.library.get().pluginId
+    }
+    apply plugin: libs.plugins.kotlin.android.get().pluginId
+    apply plugin: libs.plugins.ksp.get().pluginId
+    android {
+        compileSdk 35
+
+        defaultConfig {
+            minSdk 24
+            targetSdk 34
+        }
+        compileOptions {
+            sourceCompatibility JavaVersion.VERSION_17
+            targetCompatibility JavaVersion.VERSION_17
+        }
+        kotlinOptions {
+            jvmTarget = '17'
+        }
+    }
+
+    dependencies {
+        ksp libs.hilt.compiler
+        ksp libs.androidx.hilt.compiler
+    }
+}

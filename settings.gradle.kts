@@ -21,3 +21,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "Rsa Eval Task"
 include(":app")
+include(":feature:scan:api")
+include(":feature:scan:implementation")
