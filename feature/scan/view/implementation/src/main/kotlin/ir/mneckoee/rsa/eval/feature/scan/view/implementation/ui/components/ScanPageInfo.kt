@@ -8,8 +8,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -17,7 +15,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import ir.mneckoee.rsa.eval.core.icons.api.R
 
 @Composable
 fun ScanPageInfo() {
@@ -30,7 +30,11 @@ fun ScanPageInfo() {
             .padding(16.dp),
         verticalAlignment = Alignment.Top
     ) {
-        Icon(imageVector = Icons.Default.Info, contentDescription = "", tint = Color(0xff007AFF))
+        Icon(
+            painter = painterResource(R.drawable.ic_info),
+            contentDescription = "",
+            tint = Color(0xff007AFF)
+        )
         Spacer(Modifier.size(4.dp))
         Column(modifier = Modifier.weight(1f), horizontalAlignment = Alignment.Start) {
             Text(
