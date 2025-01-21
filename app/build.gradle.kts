@@ -17,10 +17,19 @@ android {
         versionName = "1.0"
 
     }
+    signingConfigs {
+        register("release") {
+            storeFile = file(System.getenv("HOME") + "/.android/debug.keystore")
+            storePassword = "android"
+            keyAlias = "androiddebugkey"
+            keyPassword = "android"
+        }
+    }
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            signingConfig = signingConfigs.getByName("release")
+            isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -51,6 +60,7 @@ dependencies {
     implementation(project(":app:implementation"))
     implementation(project(":feature:scan:view:implementation"))
     implementation(project(":feature:permissions:view:implementation"))
+    implementation(project(":feature:connect:view:implementation"))
     api(libs.androidx.compose.navigation)
 
 }

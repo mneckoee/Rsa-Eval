@@ -8,6 +8,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
+import ir.mneckoee.rsa.eval.feature.connect.view.implementation.ui.ConnectScreen
 import ir.mneckoee.rsa.eval.feature.permissions.view.implementation.ui.PermissionsScreen
 import ir.mneckoee.rsa.eval.feature.scan.view.implementation.ui.ScanScreen
 import ir.mneckoee.rsa.eval.permission.PermissionChecker
@@ -22,10 +23,15 @@ class MainActivity : ComponentActivity() {
             RsaEvalTaskTheme {
                 val navController = rememberNavController()
                 NavHost(
-                    navController = navController, startDestination = "scan"
+                    navController = navController, startDestination = Routes.SCAN
                 ) {
-                    composable("scan") { ScanScreen() }
-                    composable("permissions") {
+                    composable(Routes.SCAN) {
+                        ScanScreen(onDeviceSelected = { address ->
+                            if (address.isNotEmpty())
+                                navController.navigate(Routes.buildConnectRoute(address))
+                        })
+                    }
+                    composable(Routes.PERMISSIONS) {
                         PermissionsScreen(
                             onPermissionsGranted = {
                                 navController.navigateUp()
@@ -35,6 +41,11 @@ class MainActivity : ComponentActivity() {
                             }
                         )
                     }
+                    composable(Routes.CONNECT) { backStackEntry ->
+                        val address =
+                            backStackEntry.arguments?.getString(Routes.ConnectArgs.ADDRESS) ?: ""
+                        ConnectScreen(address = address)
+                    }
                 }
                 PermissionChecker {
                     if (navController.currentBackStackEntry?.destination?.route != "permissions")
@@ -42,5 +53,17 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+    }
+}
+
+private object Routes {
+    const val SCAN = "scan"
+    const val PERMISSIONS = "permissions"
+    const val CONNECT = "connect/{${ConnectArgs.ADDRESS}}"
+
+    fun buildConnectRoute(address: String) = "connect/$address"
+
+    object ConnectArgs {
+        const val ADDRESS = "address"
     }
 }

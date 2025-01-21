@@ -33,7 +33,8 @@ import ir.mneckoee.rsa.eval.feature.scan.view.implementation.viewmodel.ScanScree
 
 @Composable
 fun ScanScreen(
-    viewModel: ScanScreenViewModel = hiltViewModel()
+    viewModel: ScanScreenViewModel = hiltViewModel(),
+    onDeviceSelected: (String) -> Unit
 ) {
 
     val isBluetoothOn by viewModel.isBluetoothOn.collectAsState(false)
@@ -88,7 +89,9 @@ fun ScanScreen(
                 name = result.device?.name ?: "UnNamed",
                 mac = result.device?.address ?: "",
                 rssi = result.rssi,
-                onClick = {})
+                onClick = {
+                    onDeviceSelected(result.device?.address ?: "")
+                })
             Spacer(Modifier.height(16.dp))
         }
 //        FoundDevicesList(devices = state.foundDevices)

@@ -36,6 +36,14 @@ class ScanScreenViewModel @Inject constructor(
             result.device?.let { device ->
                 if (currentDevices.find { result.device?.address == device.address } == null)
                     currentDevices.add(result)
+                else {
+                    val index =
+                        currentDevices.indexOfFirst { result.device?.address == device.address }
+                    if (index > 0) {
+                        currentDevices[index] = result
+                    } else {
+                    }
+                }
             }
             scannedDevicesInternal.emit(currentDevices.toSet().toList())
             if (result.failed) {
