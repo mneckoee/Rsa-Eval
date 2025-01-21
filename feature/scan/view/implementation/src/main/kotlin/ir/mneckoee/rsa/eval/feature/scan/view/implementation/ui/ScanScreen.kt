@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.windowInsetsTopHeight
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -25,6 +26,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import ir.mneckoee.rsa.eval.feature.scan.view.implementation.ui.components.BluetoothStatus
+import ir.mneckoee.rsa.eval.feature.scan.view.implementation.ui.components.DeviceItem
 import ir.mneckoee.rsa.eval.feature.scan.view.implementation.ui.components.ScanButton
 import ir.mneckoee.rsa.eval.feature.scan.view.implementation.ui.components.ScanPageInfo
 import ir.mneckoee.rsa.eval.feature.scan.view.implementation.viewmodel.ScanScreenViewModel
@@ -33,8 +35,10 @@ import ir.mneckoee.rsa.eval.feature.scan.view.implementation.viewmodel.ScanScree
 fun ScanScreen(
     viewModel: ScanScreenViewModel = hiltViewModel()
 ) {
-    val isBluetoothOn by viewModel.isBluetoothOn.collectAsState(false)
 
+    val isBluetoothOn by viewModel.isBluetoothOn.collectAsState(false)
+    val isScanning by viewModel.isScanning.collectAsState()
+    val scannedDevice by viewModel.scannedDevices.collectAsState()
 
     LazyColumn(
         modifier = Modifier
@@ -74,13 +78,19 @@ fun ScanScreen(
         }
         item {
             Spacer(modifier = Modifier.height(16.dp))
-            ScanButton(isScanning = false, onClick = {})
+            ScanButton(isScanning = isScanning, onClick = {
+                viewModel.startScan()
+            })
             Spacer(modifier = Modifier.height(16.dp))
         }
-//        ScanButton(isScanning = state.isScanning, onClick = viewModel::onScanButtonClicked)
-//
-//        Spacer(modifier = Modifier.height(32.dp))
-//
+        items(scannedDevice) { result ->
+            DeviceItem(
+                name = result.device?.name ?: "UnNamed",
+                mac = result.device?.address ?: "",
+                rssi = result.rssi,
+                onClick = {})
+            Spacer(Modifier.height(16.dp))
+        }
 //        FoundDevicesList(devices = state.foundDevices)
     }
 }
