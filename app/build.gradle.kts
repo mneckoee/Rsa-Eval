@@ -50,6 +50,7 @@ dependencies {
 
     implementation(project(":app:implementation"))
     implementation(project(":feature:scan:view:implementation"))
+    implementation(project(":feature:permissions:view:implementation"))
     api(libs.androidx.compose.navigation)
 
 }
