@@ -2,6 +2,10 @@
 
 A modern Android application built with Jetpack Compose for evaluating RSA company interview task.
 
+## ScreenShots
+![Screenshot](screenshot/screens.png)
+designed in https://motiff.com by mneckoee
+
 ## Project Overview
 
 This Android application is built using modern Android development tools and practices, featuring a clean code approach with the following key components:
