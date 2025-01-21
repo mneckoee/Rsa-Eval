@@ -32,6 +32,8 @@ android-gradle = { module = "com.android.tools.build:gradle", version.ref = "agp
 kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 androidx-compose-navigation = "androidx.navigation:navigation-compose:2.8.5"
 accompanist-permissions = "com.google.accompanist:accompanist-permissions:0.28.0"
+lottie-compose = "com.airbnb.android:lottie-compose:6.6.2"
+
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 android-library = { id = 'com.android.library', version.ref = "agp" }

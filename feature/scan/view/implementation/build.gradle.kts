@@ -13,6 +13,7 @@ dependencies {
 
     implementation(libs.hilt)
     implementation(libs.androidx.hilt.navigation.compose)
+    implementation(libs.lottie.compose)
     implementation(project(":feature:scan:domain:api"))
     implementation(project(":core:icons:api"))
 }

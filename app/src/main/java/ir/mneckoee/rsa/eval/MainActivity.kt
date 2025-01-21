@@ -25,7 +25,9 @@ class MainActivity : ComponentActivity() {
                     composable("scan") { ScanScreen() }
                     composable("permissions") { PermissionsScreen(
                         onPermissionsGranted = {
-                            navController.navigate("scan")
+                            navController.navigate("scan") {
+                                popUpTo("permissions") { inclusive = true } // Remove permissions from backstack
+                            }
                         }
                     ) }
                 }
