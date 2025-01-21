@@ -10,6 +10,7 @@ import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
 import ir.mneckoee.rsa.eval.feature.permissions.view.implementation.ui.PermissionsScreen
 import ir.mneckoee.rsa.eval.feature.scan.view.implementation.ui.ScanScreen
+import ir.mneckoee.rsa.eval.permission.PermissionChecker
 import ir.mneckoee.rsa.eval.ui.theme.RsaEvalTaskTheme
 
 @AndroidEntryPoint
@@ -21,15 +22,23 @@ class MainActivity : ComponentActivity() {
             RsaEvalTaskTheme {
                 val navController = rememberNavController()
                 NavHost(
-                    navController = navController, startDestination = "permissions") {
+                    navController = navController, startDestination = "scan"
+                ) {
                     composable("scan") { ScanScreen() }
-                    composable("permissions") { PermissionsScreen(
-                        onPermissionsGranted = {
-                            navController.navigate("scan") {
-                                popUpTo("permissions") { inclusive = true } // Remove permissions from backstack
+                    composable("permissions") {
+                        PermissionsScreen(
+                            onPermissionsGranted = {
+                                navController.navigateUp()
+                            },
+                            onBackPressed = {
+                                finish()
                             }
-                        }
-                    ) }
+                        )
+                    }
+                }
+                PermissionChecker {
+                    if (navController.currentBackStackEntry?.destination?.route != "permissions")
+                        navController.navigate("permissions")
                 }
             }
         }

@@ -5,6 +5,7 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.provider.Settings
 import android.widget.Toast
+import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
@@ -51,12 +52,18 @@ import ir.mneckoee.rsa.eval.feature.permissions.view.implementation.viewmodel.Pe
 @Composable
 fun PermissionsScreen(
     viewModel: PermissionsViewModel = hiltViewModel(),
-    onPermissionsGranted: () -> Unit
+    onPermissionsGranted: () -> Unit,
+    onBackPressed: () -> Unit
 ) {
     val context = LocalContext.current
     val allPermissionGranted by viewModel.allPermissionGranted.collectAsState()
     val showUI by viewModel.showUi.collectAsState(false)
     var requestPermission by remember { mutableStateOf("") }
+
+
+    BackHandler {
+        onBackPressed()
+    }
 
     LaunchedEffect(allPermissionGranted) {
         if (allPermissionGranted)
@@ -78,7 +85,11 @@ fun PermissionsScreen(
                     .firstOrNull { context.checkSelfPermission(it) != PackageManager.PERMISSION_GRANTED }
             requestPermission = nextPermission ?: ""
         } else {
-            Toast.makeText(context, "Go to Settings and Grant All Permissions or retry", Toast.LENGTH_LONG).show()
+            Toast.makeText(
+                context,
+                "Go to Settings and Grant All Permissions or retry",
+                Toast.LENGTH_LONG
+            ).show()
         }
 
     }

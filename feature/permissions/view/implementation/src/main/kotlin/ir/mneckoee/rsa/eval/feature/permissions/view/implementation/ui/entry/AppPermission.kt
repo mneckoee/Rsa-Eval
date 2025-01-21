@@ -64,11 +64,11 @@ val locationPermissions =
                 ),
             )
         }
-//        add(
-//            AppPermission(
-//                manifestName = Manifest.permission.ACCESS_FINE_LOCATION,
-//                displayName = "Fine Location Access",
-//                description = "Required for finding nearby devices and services"
-//            ),
-//        )
+        add(
+            AppPermission(
+                manifestName = Manifest.permission.ACCESS_FINE_LOCATION,
+                displayName = "Fine Location Access",
+                description = "Required for finding nearby devices and services"
+            ),
+        )
     }.toList()
