@@ -163,7 +163,7 @@ fun PermissionsScreen(
 
                     )
                 }) {
-                Text(text = "Grant Permission", style = MaterialTheme.typography.bodyLarge)
+                Text(text = "Grant Permissions", style = MaterialTheme.typography.bodyLarge)
             }
         }
         item { Spacer(Modifier.height(12.dp)) }

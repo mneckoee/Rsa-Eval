@@ -17,7 +17,8 @@ import androidx.compose.ui.unit.dp
 @Composable
 internal fun PermissionRow(
     modifier: Modifier,
-    enable: Boolean,
+    granted: Boolean,
+    denied: Boolean,
     title: String,
     description: String,
     checked: Boolean,
@@ -25,11 +26,11 @@ internal fun PermissionRow(
 ) {
     Row(modifier = modifier
         .fillMaxWidth()
-        .clickable(enabled = enable) {
+        .clickable(enabled = !granted) {
             onCheckedChange(!checked)
         }
         .padding(top = 12.dp, bottom = 16.dp), verticalAlignment = Alignment.Top) {
-        Checkbox(enabled = enable, checked = checked || !enable, onCheckedChange = onCheckedChange)
+        Checkbox(enabled = !granted, checked = checked || granted, onCheckedChange = onCheckedChange)
         Column(
             modifier = Modifier
                 .weight(1f)
@@ -42,11 +43,18 @@ internal fun PermissionRow(
                     color = Color(0xff111827),
                     style = MaterialTheme.typography.bodyLarge
                 )
-                if (!enable) {
+                if (granted) {
                     Text(
                         modifier = Modifier.alignByBaseline(),
                         text = " (granted)",
                         color = Color(0xff16A34A),
+                        style = MaterialTheme.typography.bodySmall
+                    )
+                } else if (denied) {
+                    Text(
+                        modifier = Modifier.alignByBaseline(),
+                        text = " (denied)",
+                        color = Color.Red,
                         style = MaterialTheme.typography.bodySmall
                     )
                 }

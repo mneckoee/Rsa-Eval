@@ -44,7 +44,8 @@ fun LazyListScope.permissionsSection(
                     else -> RectangleShape
                 }
             ),
-            enable = !granted,
+            granted = granted,
+            denied = false, // cannot determine that permission is denied once
             title = permission.displayName,
             description = permission.description,
             checked = permissionChecked(permission.manifestName),
