@@ -75,10 +75,10 @@ fun PermissionsScreen(
         if (granted == true) {
             val nextPermission =
                 (bluetoothPermissions + locationPermissions).map { it.manifestName }
-                    .first { context.checkSelfPermission(it) != PackageManager.PERMISSION_GRANTED }
-            requestPermission = nextPermission
+                    .firstOrNull { context.checkSelfPermission(it) != PackageManager.PERMISSION_GRANTED }
+            requestPermission = nextPermission ?: ""
         } else {
-            Toast.makeText(context, "Go to Settings and Grant All Permissions", Toast.LENGTH_LONG).show()
+            Toast.makeText(context, "Go to Settings and Grant All Permissions or retry", Toast.LENGTH_LONG).show()
         }
 
     }
