@@ -18,6 +18,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.layout
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -33,10 +34,11 @@ fun ScanScreen(
 ) {
     val isBluetoothOn by viewModel.isBluetoothOn.collectAsState(false)
 
+
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background)
+            .background(Color.White)
             .windowInsetsPadding(WindowInsets.safeContent)
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,

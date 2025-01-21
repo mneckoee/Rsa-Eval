@@ -1,6 +1,11 @@
 package ir.mneckoee.rsa.eval.feature.scan.view.implementation.ui.components
 
+import android.bluetooth.BluetoothAdapter
+import android.content.Intent
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -13,6 +18,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -20,13 +26,20 @@ import ir.mneckoee.rsa.eval.core.icons.api.R
 
 @Composable
 fun BluetoothStatus(bluetoothEnabled: Boolean) {
+    val enableBluetoothLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) {}
     Row(
         modifier = Modifier
+            .clip(RoundedCornerShape(12.dp))
             .background(
-                shape = RoundedCornerShape(12.dp),
                 color = Color(0xffF9FAFB)
             )
             .fillMaxWidth()
+            .clickable(enabled = !bluetoothEnabled) {
+                val enableBtIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
+                enableBluetoothLauncher.launch(enableBtIntent)
+            }
             .padding(16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
